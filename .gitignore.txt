@@ -1,0 +1,2 @@
+./simulazione/venv
+./simulazione/_pycache_
