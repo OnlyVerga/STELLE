@@ -1,0 +1,60 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{subfiles}
+\usepackage[version=4]{mhchem}
+\usepackage{csquotes}
+\usepackage{biblatex}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage[sfdefault]{AlegreyaSans}
+\usepackage[margin=7em]{geometry}
+
+\addbibresource{bibliografia.bib}
+\pagenumbering{roman}
+\definecolor{title_blue}{RGB}{91, 144, 250}
+
+\setlength{\marginparwidth}{2cm}
+\begin{document}
+\title{\huge{\textbf{\textcolor{title_blue}{INQUINAMENTO ATMOSFERICO CAUSATO DALL'INDUSTRIA AEROSPAZIALE}}}}
+
+\author{Lorenzo Vergani \and Andrea Greco \and Anna Fornasari \and Pietro Nardi \and Cecilia Guizzi}
+\date{Agosto 2021}
+\maketitle
+
+\vspace{11em}
+\begin{center}
+    Questo lavoro è stato creato per il progetto \href{https://www.protom.com/2021/01/20/new-education-progetti-innovativi-in-collaborazione-con-lesa-agenzia-spaziale-europea/}{STELLE} di \href{https://www.protom.com}{PROTOM} in collaborazione con \href{https://business.esa.int/funding/invitation-to-tender/new-education}{ESA} per il progetto "New Education", al fine introdurre nuove modalità di apprendimento mirate per gli interessi di ogni studente.
+\end{center}
+
+\newpage
+\tableofcontents
+\newpage
+\section{Introduzione}
+Abbiamo deciso di focalizzarci sul tema dell'esplorazione spaziale in quanto è un settore relativamente nuovo e in continuo cambiamento. Inoltre, avendo a cuore il pianeta, abbiamo deciso di cercare di calcolare la quantità di gas serra prodotti da una ipotetica missione \href{https://www.spacex.com/vehicles/starship/}{Starship} prodotta dall'agenzia \href{https://www.spacex.com/}{SpaceX}.\\
+La maggior parte dei dati utilizzati proviene dal gigantesco database di ESA, che ha gentilmente messo a disposizione i suoi dati satellitari sulla composizione dell'atmosfera dagli anni '80 a oggi. Tutte le fonti verranno citate nella bibliografia alla fine del lavoro.\\
+Non è nostra intenzione fornire un valore esaustivo dell'inquinamento prodotto, ma solo una stima tale da far realizzare al lettore quanto il contributo che l'industria aerospaziale dà all'inquinamento atmosferico sia irrisorio rispetto alle quantità di gas serra prodotti da altre attività umane.\\
+Speriamo di divulgare un po' più di consapevolezza nel lettore sul problema dell'inquinamento dell'aria e di quanto questo sia facilmente limitabile con dei piccoli accorgimenti nella vita di tutti i giorni che non richiedono un grande sforzo economico o un grande impiego di tempo.
+\newpage
+\pagenumbering{arabic}
+\part{Inquinamento prodotto da una missione Starship}
+\setcounter{section}{0}
+\section{Lancio e raggiungimento di un'orbita LEO}
+\subfile{lancio}
+\section{Volo da LEO fino in orbita marziana}
+\subfile{orbite}
+\section{Atterraggio e ripartenza}
+\subfile{atterraggio}
+\section{Resoconto dei consumi totali e inquinamento prodotto}
+\subfile{inquinamento}
+\newpage
+\part{Contributo del settore aerospaziale}
+\setcounter{section}{0}
+\section{Prova}
+\section{Prova2}
+\printbibliography
+
+\end{document}

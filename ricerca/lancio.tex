@@ -1,0 +1,93 @@
+\subsection{Introduzione}
+La parte più difficile e inquinante del viaggio di un'astronave è sicuramente il lancio, in quanto l'astronave è sottoposta a numerose forze, tra cui spicca la gravità, ma non bisogna dimenticare l'attrito con l'aria o eventuali turbolenze di essa, che potrebbero far differire la rotta dell'astronave da quella prevista.\\ 
+La bassa atmosfera risulta essere il luogo in cui avvengono più incidenti a livello aerospaziale, con numerosi casi di missioni fallite e in alcuni casi estremi anche perdite di vite umane.\\
+La tipica forma del "razzo" serve proprio a massimizzare la sua aerodinamicità e diminuire le forze di attrito con l'aria. Definire il modello che un lanciatore deve avere è un lavoro molto lungo e complicato che vede impegnati interi team di ingegneri specializzati, ma per fortuna il design di Starship degli ultimi prototipi (SN8-SN15) è molto simile a quello che sarà il risultato finale, quindi tutti i test in corso servono anche per determinare questi parametri.\\
+Poiché i test di Starship al momento sono ancora in corso e non sono stati ancora pubblicati dei veri e propri piani di volo saremo costretti a ipotizzare le orbite che l'astronave assumerà prima di partire verso Marte.\\
+È infatti un usanza comune usufruire delle cosiddette \textit{orbite di parcheggio} prima di assumere l'orbita iperbolica che porterà a destinazione al fine di accertarsi delle condizioni del veicolo dopo il lancio e aggiustare l'orbita se necessario. Tali orbite ricadono nella categoria LEO.\\
+Prendiamo in considerazione la legge della conservazione della quantità di moto: essa dice che in un sistema isolato la quantità di moto totale rimane costante. Rappresentando il sistema lanciatore-carburante come un sistema chiuso ne segue che se il carburante viene espulso in una direzione il lanciatore otterrà della velocità nel verso opposto.
+Possiamo quindi scrivere che:
+$$
+m \cdot \Vec{\Delta v} = - \Delta m \cdot \Vec{w}
+$$
+Dove $m$ è la massa del lanciatore, $\Vec{\Delta v}$ il suo incremento in velocità, $\Delta m$ la massa del carburante espulso e $\Vec{w}$ la sua velocità.
+Se osserviamo questo fenomeno in un intervallo di tempo $\Delta t$ possiamo scrivere:
+$$
+m \cdot \frac{\Vec{\Delta v}}{\Delta t} = - \frac{\Delta m}{\Delta t} \cdot \Vec{w}
+$$
+Se questo intervallo di tempo diventa infinitesimo si ottiene che:
+\begin{equation}
+    \label{Rocket eq starting}
+    m \cdot \frac{d\Vec{v}}{dt} = - \frac{dm}{dt} \cdot \Vec{w}
+\end{equation}
+È necessario fare una considerazione prima di proseguire: i vettori $\Vec{v}$ e $\Vec{w}$ hanno sempre verso opposto (a causa della terza legge della dinamica), quindi possiamo semplificare i calcoli riducendo il sistema a una dimensione e tralasciando il simbolo di vettore. Prendiamo come direzione positiva quella di $\Vec{v}$ e come direzione negativa quella di $\Vec{w}$.
+Integrando entrambe le parti rispetto al tempo da un istante $0$ fino all'istante $t$ in cui finisce la combustione si ottiene:
+$$
+\int_{v(0)}^{v(t)}dv = -\int_{m(0)}^{m(t)}\frac{w}{m}dm
+$$
+Risolvendo questi integrali si ottiene la famosa equazione del razzo di Tsiolkovsky, così chiamata in onore dello scienziato russo che la scoprì.
+\begin{equation}
+    \label{Rocket eq}
+    \Delta v = -w \cdot ln\left(\frac{m_i}{m_f}\right)
+\end{equation}
+Tale equazione funziona solo nello spazio in orbita o lontano da qualsiasi grande massa, in quanto non tiene conto della forza di gravità.\\
+Per i prossimi calcoli ci servirà un'altra versione totalmente equivalente di questa formula, riscritta sfruttando l'impulso specifico del carburante e la massa di propellente espulsa:
+\begin{equation}
+    \label{rocket eq bella}
+    \Delta v = I_{sp} \cdot g_0\cdot ln\left(\frac{m_i}{m_i- m_c}\right)
+\end{equation}
+Facendo un passo indietro e tornando all'equazione \ref{Rocket eq starting} si può notare che essa rappresenta una somma di forze che agiscono sul veicolo, quindi possiamo aggiungere un componente dipendente dal peso del razzo:
+\begin{equation}
+    \label{Rocket eq starting grav}
+    m \cdot \frac{dv}{dt} = - \frac{dm}{dt} \cdot w - m \cdot g \cdot sin (\theta)
+\end{equation}
+Tale membro è la componente del peso che è parallela al razzo e che contribuisce a frenarlo ($\theta$ rappresenta l'inclinazione che questo forma con la verticale).\\ In questa equazione possiamo non tener conto dell'accelerazione perpendicolare al razzo data dalla forza peso in quanto l'astronave si trova in atmosfera e l'accelerazione perpendicolare viene compensata dalla portanza che il razzo crea a contatto con l'aria in movimento.\\
+Da questa equazione si può capire perchè le traiettorie che i razzi seguono sono curve: Aumentando l'inclinazione del razzo diminuisce la componente frenante, ma aumenta il tempo di salita. Il lavoro degli ingegneri sta nel trovare un compromesso tra queste due variabili per ottenere un valore ottimale per i consumi.\\
+Utilizzando un processo simile a quello utilizzato per ricavare la \ref{Rocket eq} otteniamo che:
+\begin{equation}
+    \label{Rocket eq grav}
+    v_t = w \cdot ln\left(\frac{m_i}{m_f}\right) - \overline{g \cdot sin(\theta)} \cdot t
+\end{equation}
+Il secondo addendo rappresenta un valor medio di $g \cdot sin(\theta)$.\\
+Questo, però, non tiene ancora conto dell'attrito che si crea con l'atmosfera. Il problema è risolvibile aggiungendo nell'equazione \ref{Rocket eq starting grav} un'altra forza che chiameremo $R$, che tiene conto di ogni forma di attrito. Questa forza dipende da vari fattori e non esiste un metodo per ricavare una legge che la descrive in quanto il moto dell'aria risulta essere caotico e le equazioni differenziali che lo descrivono risultano irrisolvibili se non per particolari casi di flusso completamente laminare.\\
+Tuttavia, si è ricavata sperimentalmente questa approssimazione:
+$$
+R = \frac{1}{2}\rho \cdot v^2 \cdot A \cdot C_r
+$$
+Dove $A$ rappresenta la sezione del razzo e $C_r$ un coefficiente adimensionale che serve a ridimensionare il valore ottenuto. Questo coefficiente dipende dalla forma del razzo e dall'angolo di attacco di questo.\\
+Come spiegato in precedenza, per il caso di Starship non sono ancora stati effettuati tutti i test necessari e questo valore non è noto al pubblico. Per semplicità, quando calcoleremo i consumi di una Starship ignoreremo tutti gli attriti con l'aria. Secondo dei calcoli eseguiti al MIT \cite{einstein} l'attrito con l'aria è solitamente circa il 2 \% del peso del veicolo, in quanto questo è estremamente ottimizzato per il volo in atmosfera, quindi possiamo ignorarlo senza commettere troppo errore.\\
+Come vedremo questi consumi saranno comunque irrisori rispetto all'inquinamento prodotto dall'industria dell'automobilistica o dell'aviazione commerciale.
+\subsection{Definizione delle orbite}
+\label{Definizione orbite}
+Come programmato, il primo passo da fare è quello di inserirsi in un'orbita LEO temporanea. Poiché SpaceX non ha ancora pubblicato i suoi piani di volo per Starship non sappiamo con certezza le dimensioni di quest'orbita, di conseguenza siamo costretti ad assumerle. Per semplicità supponiamo che voglia posizionarsi a 400km di altezza, circa come la ISS. Comunque poco cambia tra un'orbita o un'altra in quanto la forza di gravità da contrastare è conservativa, ciò significa che non importa il tragitto che il corpo compie, ma il lavoro che questo dovrà compiere per superare la forza di gravità dipende solo dal punto di partenza e il punto di arrivo (se si assume  un'orbita più bassa poi risulterà più difficoltoso assumere un'orbita iperbolica, mentre se si assume un'orbita più alta sarà più difficile raggiungerla, ma dopo sarà facile fuggire dalla SOI terrestre).\\
+Il problema principale del lancio è calcolare quel parametro $\overline{g \cdot sin(\theta)}$, impossibile senza fare delle approssimazioni. Una approssimazione da fare consiste nell'ipotizzare che l'angolo $\theta$ cambi in maniera lineare, anche se nella realtà non è proprio così. Questo ci permette di sostituire $\theta$, che varia da 0 a$\frac{\pi}{2}$ radianti, con il suo valor medio $\overline{\theta}$, che vale $\frac{\pi}{4}$ radianti. \\
+Per l'accelerazione di gravità, invece, si procede in un modo un po'più difficile. Il valor medio risulta uguale all'integrale definito dell'espressione di g in funzione di r diviso l'intervallo preso in considerazione. In simboli:
+$$
+\overline{g} = \frac{1}{h}\int_{r_t}^{r_t+h}{\frac{GM}{r^2}dr}
+$$
+Dove con $h$ ci si riferisce alla quota dell'orbita, e con $r_t$ al raggio terrestre. Tale integrale è finito e per l'orbita prestabilita (400 km slm) vale circa $9,2 \, \frac{m}{s^2}$.
+Questa equazione così ottenuta va applicata al primo stadio di un lancio Starship: il Super Heavy. Questo booster pesa ben 5 mila tonnellate da solo, di cui 3,4 mila solo di carburante. Lo spegnimento del booster viene chiamato MECO (Main Engine CutOff) e avviene dopo circa 2 minuti di volo (T+2:30). La fase successiva si interrompe con il SECO (Second Engine CutOff). In quest'ultima fase avviene il distacco del booster dalla astronave. Il SECO avviene dopo circa 8 minuti di volo (T+8:07) la durata complessiva dell'accensione del secondo stadio dura circa 5 minuti (5:24).
+\subsection{Calcolo delle velocità e dei consumi}
+Si prenda in considerazione la prima fase del lancio, dalla partenza al MECO. In questa fase si ha il booster Super Heavy attaccato alla Starship, che serve a portare la starship ad un'orbita intermedia molto bassa prima di eseguire la manovra finale per raggiungere l'orbita di parcheggio.\\
+La massa iniziale della nave con il booster è di 5\,000 tonnellate, quella finale di circa 1\,320 tonnellate.
+Inserendo questi parametri nella \ref{Rocket eq grav} e prendendo 150 s \footnote{I valori relativi al volo si riferiscono al Falcon 9 di SpaceX, si presume che Starship avrà dei piani di volo simili} come tempo di accensione, otteniamo che la velocità finale è di:
+$$
+v_t = I_{sp} \cdot g_0 \cdot ln\left(\frac{m_i}{m_f}\right) - \overline{g \cdot sin(\theta)} \cdot t
+$$
+$$
+v_t = 330\,s \cdot 9,8\,\frac{m}{s^2} \cdot ln\left(\frac{5\,000\,t}{1\,320\,t}\right) - 9,2\,\frac{m}{s^2} \cdot sin\left(\frac{\pi}{4}\right) \cdot 150\,s
+$$
+Risolvendo otteniamo che $v_t$ risulta essere $3\,380\,\frac{m}{s}$. Tale valore è relativo al suolo terrestre, che a sua volta è in movimento rispetto al centro.\\
+Possiamo calcolare questa velocità usando le leggi del moto circolare uniforme:\\
+$$
+v = \omega \cdot r = \frac{2 \pi}{T} \cdot r_t \cdot cos(lat)
+$$
+dove con T indichiamo il periodo di rotazione (1 giorno) e con lat indichiamo la latitudine del posto.
+A Boca Chica, Texas, questa velocità vale circa $417\,\frac{m}{s}$.\\
+Inoltre, questa velocità non è sufficiente a mantenere la Starship in orbita in quanto, all'altezza prestabilita, ha bisogno di una velocità di circa 
+$7\,660\,\frac{m}{s}$ per rimanere in quell'orbita.\\
+Ora si arriva alla seconda fase del lancio, quella da MECO a SECO. In questa fase il booster si è già staccato dalla nave e la Starship si trova in orbita, quindi si può usare la \ref{rocket eq bella}, ignorando la gravità\footnote{L'astronave non è esattamente in orbita in questo momento, ma possiamo trascurare gli effetti della gravità in quanto l'astronave possiede una velocità comparabile con quella che si vuole ottenere}.
+$$
+7\,660\,\frac{m}{s} - (3\,380\,\frac{m}{s} + 417\,\frac{m}{s})= 375\,s \cdot 9,8\,\frac{m}{s^2} \cdot ln\left(\frac{1\,320t}{m_f}\right)
+$$
+Risolvendo questa equazione si ottiene che $m_f$ è uguale a 461 tonnellate, portando così a bruciare 859 tonnellate di carburante.\\
+Una volta ottenuta l'altezza desiderata avviene una manovra di \textit{refueling} in orbita, in cui un'altra Starship apposita riempie di nuovo di carburante la Starship che dovrà fare il viaggio, riportando la sua massa a 1\,320 tonnellate. In questa fase si effettuano gli ultimi controlli prima di eseguire la manovra di uscita dalla SOI terrestre.
