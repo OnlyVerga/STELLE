@@ -24,7 +24,7 @@ Integrando entrambe le parti rispetto al tempo da un istante $0$ fino all'istant
 $$
 \int_{v(0)}^{v(t)}dv = -\int_{m(0)}^{m(t)}\frac{w}{m}dm
 $$
-Risolvendo questi integrali si ottiene la famosa equazione del razzo di Tsiolkovsky, così chiamata in onore dello scienziato russo che la scoprì.
+Risolvendo questi integrali si ottiene la famosa equazione del razzo di Tsiolkovsky, così chiamata in onore dello scienziato russo che la scoprì\footnote{Poiché le velocità, seppur elevate, sono trascurabili rispetto a quelle della luce, è possibile utilizzare le trasformazioni di Galileo, ignorando gli effetti relativistici.}.
 \begin{equation}
     \label{Rocket eq}
     \Delta v = -w \cdot ln\left(\frac{m_i}{m_f}\right)
@@ -62,32 +62,37 @@ Come programmato, il primo passo da fare è quello di inserirsi in un'orbita LEO
 Il problema principale del lancio è calcolare quel parametro $\overline{g \cdot sin(\theta)}$, impossibile senza fare delle approssimazioni. Una approssimazione da fare consiste nell'ipotizzare che l'angolo $\theta$ cambi in maniera lineare, anche se nella realtà non è proprio così. Questo ci permette di sostituire $\theta$, che varia da 0 a$\frac{\pi}{2}$ radianti, con il suo valor medio $\overline{\theta}$, che vale $\frac{\pi}{4}$ radianti. \\
 Per l'accelerazione di gravità, invece, si procede in un modo un po'più difficile. Il valor medio risulta uguale all'integrale definito dell'espressione di g in funzione di r diviso l'intervallo preso in considerazione. In simboli:
 $$
-\overline{g} = \frac{1}{h}\int_{r_t}^{r_t+h}{\frac{GM}{r^2}dr}
+\overline{g} = \frac{1}{h}\int_{r_t}^{r_t+h}{\frac{Gm_t}{r^2}dr}
 $$
-Dove con $h$ ci si riferisce alla quota dell'orbita, e con $r_t$ al raggio terrestre. Tale integrale è finito e per l'orbita prestabilita (400 km slm) vale circa $9,2 \, \frac{m}{s^2}$.
-Questa equazione così ottenuta va applicata al primo stadio di un lancio Starship: il Super Heavy. Questo booster pesa ben 5 mila tonnellate da solo, di cui 3,4 mila solo di carburante. Lo spegnimento del booster viene chiamato MECO (Main Engine CutOff) e avviene dopo circa 2 minuti di volo (T+2:30). La fase successiva si interrompe con il SECO (Second Engine CutOff). In quest'ultima fase avviene il distacco del booster dalla astronave. Il SECO avviene dopo circa 8 minuti di volo (T+8:07) la durata complessiva dell'accensione del secondo stadio dura circa 5 minuti (5:24).
+Dove con $h$ ci si riferisce alla quota dell'orbita. Tale integrale è finito e per l'orbita prestabilita (400 km s.l.m.) vale circa $9,2 \, \frac{m}{s^2}$.\\
+L'equazione \ref{Rocket eq grav} va applicata al primo stadio di un lancio Starship: il Super Heavy. Questo booster pesa ben 5 mila tonnellate da solo, di cui 3,4 mila solo di carburante. In un volo normale il MECO avviene dopo circa 2 minuti di volo (T+2:30). La fase successiva si interrompe con il SECO. In quest'ultima fase avviene il distacco del booster dalla astronave. Il SECO avviene dopo circa 8 minuti di volo (T+8:07) la durata complessiva dell'accensione del secondo stadio dura circa 5 minuti (5:24).
 \subsection{Calcolo delle velocità e dei consumi}
-Si prenda in considerazione la prima fase del lancio, dalla partenza al MECO. In questa fase si ha il booster Super Heavy attaccato alla Starship, che serve a portare la starship ad un'orbita intermedia molto bassa prima di eseguire la manovra finale per raggiungere l'orbita di parcheggio.\\
-La massa iniziale della nave con il booster è di 5\,000 tonnellate, quella finale di circa 1\,320 tonnellate.
+Prendiamo in considerazione la prima fase del lancio, dalla partenza al MECO. In questa fase si ha il booster Super Heavy attaccato alla Starship, che serve a portare la nave ad un'orbita intermedia molto bassa prima di eseguire la manovra finale per raggiungere l'orbita di parcheggio.\\
+La massa iniziale della nave con il booster è di 5\,000 tonnellate, quella finale (priva del booster) di circa 1\,320 tonnellate.
 Inserendo questi parametri nella \ref{Rocket eq grav} e prendendo 150 s \footnote{I valori relativi al volo si riferiscono al Falcon 9 di SpaceX, si presume che Starship avrà dei piani di volo simili} come tempo di accensione, otteniamo che la velocità finale è di:
 $$
-v_t = I_{sp} \cdot g_0 \cdot ln\left(\frac{m_i}{m_f}\right) - \overline{g \cdot sin(\theta)} \cdot t
+v_t = I_{spa} \cdot g_0 \cdot ln\left(\frac{m_i}{m_f}\right) - \overline{g \cdot sin(\theta)} \cdot t
 $$
 $$
-v_t = 330\,s \cdot 9,8\,\frac{m}{s^2} \cdot ln\left(\frac{5\,000\,t}{1\,320\,t}\right) - 9,2\,\frac{m}{s^2} \cdot sin\left(\frac{\pi}{4}\right) \cdot 150\,s
+v_t = 330\,s \cdot 9,8\,\frac{m}{s^2} \cdot ln\left(\frac{5\,000\,t}{5\,000\,t - 3\,400\,t}\right) - 9,2\,\frac{m}{s^2} \cdot sin\left(\frac{\pi}{4}\right) \cdot 150\,s
 $$
-Risolvendo otteniamo che $v_t$ risulta essere $3\,380\,\frac{m}{s}$. Tale valore è relativo al suolo terrestre, che a sua volta è in movimento rispetto al centro.\\
+Risolvendo otteniamo che $v_t$ risulta essere $2\,710\,\frac{m}{s}$. Tale valore è relativo al suolo terrestre, che a sua volta è in movimento rispetto al centro.\\
 Possiamo calcolare questa velocità usando le leggi del moto circolare uniforme:\\
 $$
 v = \omega \cdot r = \frac{2 \pi}{T} \cdot r_t \cdot cos(lat)
 $$
-dove con T indichiamo il periodo di rotazione (1 giorno) e con lat indichiamo la latitudine del posto.
+dove con T indichiamo il periodo di rotazione (1 giorno) e con $lat$ indichiamo la latitudine del posto.
 A Boca Chica, Texas, questa velocità vale circa $417\,\frac{m}{s}$.\\
 Inoltre, questa velocità non è sufficiente a mantenere la Starship in orbita in quanto, all'altezza prestabilita, ha bisogno di una velocità di circa 
-$7\,660\,\frac{m}{s}$ per rimanere in quell'orbita.\\
-Ora si arriva alla seconda fase del lancio, quella da MECO a SECO. In questa fase il booster si è già staccato dalla nave e la Starship si trova in orbita, quindi si può usare la \ref{rocket eq bella}, ignorando la gravità\footnote{L'astronave non è esattamente in orbita in questo momento, ma possiamo trascurare gli effetti della gravità in quanto l'astronave possiede una velocità comparabile con quella che si vuole ottenere}.
+$7\,670\,\frac{m}{s}$ per rimanere in quell'orbita.\\
+Tale velocità è ottenibile mediante la relazione
 $$
-7\,660\,\frac{m}{s} - (3\,380\,\frac{m}{s} + 417\,\frac{m}{s})= 375\,s \cdot 9,8\,\frac{m}{s^2} \cdot ln\left(\frac{1\,320t}{m_f}\right)
+v_o = \sqrt{\frac{G \cdot M}{d}}
 $$
-Risolvendo questa equazione si ottiene che $m_f$ è uguale a 461 tonnellate, portando così a bruciare 859 tonnellate di carburante.\\
+e vale solo per le orbite circolari. Con $M$ indichiamo la massa del pianeta e con $d$ la distanza dal centro di esso.\\
+Ora si arriva alla seconda fase del lancio, da MECO a SECO. In questa fase il booster si è staccato dalla nave e la Starship si trova in orbita, quindi si può usare la \ref{rocket eq bella}, ignorando gli effetti di attrazione gravitazionale\footnote{L'astronave non è esattamente in orbita in questo momento, ma possiamo trascurare gli effetti della gravità in quanto l'astronave possiede una velocità comparabile con quella che si vuole ottenere}.
+$$
+7\,660\,\frac{m}{s} - (2\,710\,\frac{m}{s} + 417\,\frac{m}{s})= 375\,s \cdot 9,8\,\frac{m}{s^2} \cdot ln\left(\frac{1\,320t}{m_f}\right)
+$$
+Risolvendo questa equazione si ottiene che $m_f$ è uguale a 383 tonnellate, portando così a bruciare 937 tonnellate di carburante.\\
 Una volta ottenuta l'altezza desiderata avviene una manovra di \textit{refueling} in orbita, in cui un'altra Starship apposita riempie di nuovo di carburante la Starship che dovrà fare il viaggio, riportando la sua massa a 1\,320 tonnellate. In questa fase si effettuano gli ultimi controlli prima di eseguire la manovra di uscita dalla SOI terrestre.

@@ -11,64 +11,69 @@ Poiché non è nostra intenzione programmare un lancio ma solo capire quanto que
 \subsection{Fuga dal campo gravitazionale terrestre}
 Il primo passo consiste nel fuggire dalla SOI della Terra. Si può raggiungere questo obiettivo tramite un'orbita di tipo iperbolico.
 Una volta finiti tutti i controlli nell'orbita di parcheggio LEO la Starship è pronta a riaccendere i motori e inserirsi in orbita iperbolica.
-Per farlo dovrà raggiungere una velocità $v_i$ tale da arrivare fuori dalla SOI terrestre con una velocità che chiameremo $v_\infty$. Possiamo considerare l'astronave soggetta a gravità e la Terra come un sistema chiuso, ignorando gli effetti gravitazionali del Sole o degli altri pianeti, di conseguenza l'energia totale viene conservata.\\
-Possiamo inoltre assumere che all'uscita della SOI l'energia potenziale gravitazionale sia 0, in quanto questa assumerà valori trascurabili rispetto all'energia cinetica dell'astronave:
+Per farlo dovrà raggiungere una velocità $v_i$ tale da arrivare fuori dalla SOI terrestre con una velocità che chiameremo $v_\infty$.\\
+Senza fare troppe approssimazioni è possibile considerare il sistema Terra-Starship come un sistema chiuso (ignorando di conseguenza le influenze gravitazionali del Sole e gli altri pianeti). Di conseguenza l'energia meccanica totale viene conservata.\\
+Possiamo inoltre assumere che all'uscita della SOI l'energia potenziale gravitazionale sia 0, in quanto questa assumerà valori trascurabili rispetto all'energia cinetica dell'astronave. In simboli:
 $$K_0 + U_0 = K$$
 \begin{equation}
     \label{Velocità Terra}
     \frac{1}{2}v_i^2 - \frac{\mu_t}{r} = \frac{1}{2}v_{\infty}^2
 \end{equation}
-dove $\mu_t$ indica il prodotto $G \cdot M_t$, e $r$ indica il raggio dell'orbita iniziale.\\
-Possiamo quindi arrivare a calcolare $v_i$ riorganizzando i termini dell'equazione,in quanto conosciamo il valore di $v_\infty$ come vedremo nella prossima sezione.
+dove $\mu_k$ indica il prodotto $G \cdot M_k$, con $k$ che fa riferimento a qualsiasi massa arbitraria.\\
+Come vedremo nel prossimo paragrafo, è possibile calcolare con relativa facilità il parametro $v_\infty$, di conseguenza possiamo risolvere l'equazione \ref{Velocità Terra} per $v_i$.
 
 \subsection{Volo attraverso lo spazio interplanetario}
 Per arrivare effettivamente fino a Marte possiamo utilizzare un concetto simile a quello che viene usato per i trasferimenti nelle orbite terrestri, tale metodo prevede l'utilizzo di un'orbita intermedia chiamata orbita di Hohmann, in memoria dello scienziato tedesco che elaborò per primo questo metodo.\\
-Tale orbita gode di un'elevata eccentricità e ha il perielio sull'orbita iniziale e l'afelio sull'orbita che si vuole raggiungere. Una volta arrivati in afelio si esegue un'altra manovra per guadagnare velocità e inserirsi nell'orbita desiderata.\\
+Tale orbita gode di un'elevata eccentricità e ha il perielio sull'orbita iniziale e l'afelio sull'orbita che si vuole raggiungere.\\
+Una volta arrivati in afelio si esegue un'altra manovra per guadagnare velocità e inserirsi nell'orbita desiderata.\\
 Chiamiamo $v_\pi$ la velocità in perielio e $v_\alpha$ quella in afelio.
 Poiché non ci sono forze a modificarne il momento angolare (l'unica forza in gioco è quella di gravità, ma risulta essere centripeta quindi non possiede alcun momento torcente) esso rimane costante lungo tutta l'orbita.
 possiamo quindi scrivere:
-
 \begin{equation}
     \label{Conservazione MA}
-    v_\pi \cdot r_t = v_\alpha \cdot r_m
+    v_\pi \cdot R_t = v_\alpha \cdot R_m
 \end{equation}
-dove $r_t$ rappresenta il raggio dell'orbita della Terra (orbita di partenza) e $r_m$ quello dell'orbita di Marte (orbita di arrivo).\\
-Poiché è necessario che la Starship si allontani rispetto al Sole, si può notare che la sua velocità in perielio deve essere maggiore di quella della Terra. Da quando l'astronave assume l'orbita iperbolica al momento della fuga dalla SOI è utile trascurare lo spostamento che la Starship ha compiuto (esso è irrisorio in confronto alle distanze tra i pianeti e il Sole), in questo modo $v_\pi$ risulta essere la somma tra $v_t$ e $v_\infty$. 
-
+Poiché è necessario che la Starship si allontani rispetto al Sole, si può notare che la sua velocità in perielio deve essere maggiore di quella della Terra. Cambiando il sistema di riferimento dalla Terra al Sole bisogna considerare il fatto che la Terra stessa si muove rispetto al Sole con una velocità $v_t$, calcolabile tramite la relazione della velocità orbitale in orbita circolare.\\
+Di conseguenza un oggetto che si muove a velocità $v$ rispetto alla Terra si muoverà ad una velocità $v + v_t$ rispetto al Sole.\\
+Applichiamo questo fatto alla Starship e otteniamo una importante relazione:
+$$
+v_\pi = v_t + v_\infty
+$$
+Conoscendo $v_\pi$ e potendo calcolare $v_t$ si può procedere "al contrario" fino a ricavare $v_\infty$ e $v_i$.
 \subsection{Inserimento in orbita marziana}
 Analogamente per quanto fatto con la Terra, una volta giunti nella SOI di Marte bisogna rallentare fino ad una velocità $v_o$ per raggiungere un'orbita circolare intorno al pianeta.
-Come per la Terra, poiché non ci sono forze a perturbare il moto dell'astronave, l'energia meccanica totale viene conservata e quindi:
+Come per la Terra, poiché l'unica forza in gioco è la forza di gravità di Marte, l'energia meccanica totale viene conservata e quindi:
 $$K_0 = K + U$$
 \begin{equation}
     \label{Velocità marte}
     \frac{1}{2}v_\infty^2  = \frac{1}{2}v_i^2 - \frac{\mu_m}{r}
 \end{equation}
 dove $v_i$ rappresenta la velocità al vertice dell'orbita iperbolica, che poi verrà diminuita fino a farla corrispondere a $v_o$.
-Anche qua conviene esprimere $v_\alpha$ come la somma tra $v_m$ e $v_\infty$, trascurando le dimensioni della SOI di Marte in confronto alle dimensioni delle orbite dei pianeti.
+Anche in questo caso conviene esprimere $v_\alpha$ come la somma tra $v_m$ e $v_\infty$, trascurando le dimensioni della SOI di Marte in confronto allo spazio interplanetario.
+Una volta calcolato $v_i$ bisogna effettuare un'ultima manovra per inserirsi in orbita marziana. L'obiettivo di tale manovra è quello di far diminuire la velocità orbitale da $v_i$ a $v_o$ portando la Starship in un'orbita circolare.
 \subsection{Calcolo delle velocità e dei consumi}
 Per ottenere l'orbita che la Starship deve seguire per arrivare su Marte bisogna usare l'equazione \ref{Conservazione MA} a sistema con la conservazione dell'energia nei due punti di afelio e di perielio:
 \begin{equation}
     \begin{cases}
-        v_\pi \cdot r_t = v_\alpha \cdot r_m\\
-        \frac{1}{2}v_\pi^2 - \frac{\mu_s}{r_t} = \frac{1}{2}v_\alpha^2 - \frac{\mu_s}{r_m}
+        v_\pi \cdot R_t = v_\alpha \cdot R_m\\
+        \frac{1}{2}v_\pi^2 - \frac{\mu_s}{R_t} = \frac{1}{2}v_\alpha^2 - \frac{\mu_s}{R_m}
     \end{cases}
 \end{equation}
 Risolvendo il sistema e scartando i risultati negativi si ottiene un unico valore possibile per entrambe le velocità: $v_\pi = 32\,700\,\frac{m}{s}$ e $v_\alpha = 21\,500
 \,\frac{m}{s}$ . Ora è possibile calcolare $v_\infty$ per fuggire dal campo gravitazionale terrestre sottraendo $v_t$ da $v_\pi$:
 $$
-v_\infty = v_\pi - v_t = 32\,700 \frac{m}{s} - 30\,000 \frac{m}{s} = 2\,700 \frac{m}{s}
+v_\infty = v_\pi - v_t = 32\,700\, \frac{m}{s} - 29\,780\, \frac{m}{s} = 2\,940\,\frac{m}{s}
 $$
 Applicando l'equazione \ref{Velocità Terra} calcolo la velocità che l'astronave deve raggiungere per lasciare la LEO e ottenere l'orbita iperbolica.
 $$
-\frac{1}{2}v_i^2 - \frac{\mu_t}{r} = \frac{1}{2}\left(2\,700 \frac{m}{s}\right)^2
+\frac{1}{2}v_i^2 - \frac{\mu_t}{r} = \frac{1}{2}\left(2\,940\,\frac{m}{s}\right)^2
 $$
 Come visto nel paragrafo \ref{Definizione orbite} il raggio dell'orbita LEO a cui si fa riferimento è 6\,770 km.
-Risolvendo l'equazione, si ottiene che $v_i$ risulta essere uguale a $11\,156\,\frac{m}{s}$.\\
-La velocità orbitale nel caso di orbita circolare a quell'altezza è uguale a
-$$
-v = \sqrt{\frac{\mu_t}{r}} = 7\,687\,\frac{m}{s}
-$$
+Risolvendo l'equazione, si ottiene che $v_i$ risulta essere uguale a $11\,240\,\frac{m}{s}$.\\
 Usiamo ora la \ref{rocket eq bella} per calcolare la massa di carburante che è necessario bruciare per eseguire questa manovra.
+$$
+(11\,240-7\,670)\frac{m}{s} = 375\,s\cdot9,8\frac{m}{s^2}\cdot ln\left(\frac{1\,320\,t}{1\,320\,t - m_c}\right)
+$$
 Risolvendo l'equazione si ottiene che la massa di carburante espulsa deve essere uguale a 820 tonnellate \footnote{Calcolando questo consumo possiamo ignorare l'effetto della gravità in quanto la Starship è già posizionata in orbita.}.\\
 La massa di Starship, a questo punto, è la massa iniziale (ca. $1\,320$ tonnellate) diminuita del carburante espulso, a dare circa 500 tonnellate tra carburante rimasto, telaio e carico.\\
 Per ottenere, invece, la velocità che l'astronave deve ottenere per inserirsi in orbita marziana bisogna decidere l'orbita che questa deve avere. Per semplicità supponiamo che questa sia di 300 km sopra la superficie.\\
@@ -78,14 +83,11 @@ Usando il principio della conservazione dell'energia si ottiene:
 $$
 \frac{1}{2}v_i^2 - \frac{\mu_m}{r} = \frac{1}{2}\left(21\,500\,\frac{m}{s} - 24\,000\,\frac{m}{s}\right)^2
 $$
-Risolvendo per $v_i$ otteniamo che questa è uguale a $5\,410\,\frac{m}{s}$. Essa è superiore alla velocità $v_o$ che l'astronave avrebbe se si trovasse in orbita circolare alla stessa quota.\\
-La velocità in orbita circolare è calcolabile mediante la relazione:
-$$
-v_o = \sqrt{\frac{\mu_m}{r}} = 3,350\,\frac{m}{s}
-$$
+Risolvendo per $v_i$ otteniamo che questa è uguale a $5\,670\,\frac{m}{s}$. Essa è superiore alla velocità $v_o$ che l'astronave avrebbe se si trovasse in orbita circolare alla stessa quota.\\
+La velocità $v_o$ è calcolabile mediante la relazione citata in precedenza e risulta essere uguale a $3\,490\,\frac{m}{s}$.\\
 Possiamo calcolare il consumo di carburante provocato da questa manovra tramite l'equazione \ref{rocket eq bella}:
 $$
-5\,410\,\frac{m}{s}-3\,350\,\frac{m}{s} = I_{sp} \cdot g_0 \cdot ln\left(\frac{500\,t}{500\,t - m_c}\right)
+5\,670\,\frac{m}{s}-3\,550\,\frac{m}{s} = I_{sp} \cdot g_0 \cdot ln\left(\frac{500\,t}{500\,t - m_c}\right)
 $$
 Bisogna notare che $\Delta v$ compare con il segno opposto (velocità iniziale - velocità finale), questo perché se ci si pone in un sistema di riferimento solidale al razzo, quando questo rallenta non si ha altro che un'accelerazione nel verso opposto, il che fa si che il razzo ottenga una velocità pari alla differenza tra le due cambiata di segno.\\
-Risolvendo questa equazione si ottiene una massa di propellente espulsa di circa 210 tonnellate, lasciandone circa altre 90 per atterraggio e eventuali correzioni orbitali fatte in precedenza.
+Risolvendo questa equazione si ottiene una massa di propellente espulsa di circa 217 tonnellate, lasciandone circa altre 90 per atterraggio e eventuali correzioni orbitali fatte in precedenza.
