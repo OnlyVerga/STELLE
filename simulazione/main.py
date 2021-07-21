@@ -1,46 +1,105 @@
-import linear_algebra
+import numpy as np
 import pygame
-import json
+from astropy.time import Time
+from astroquery.jplhorizons import Horizons
+import math
+
+scaling = 100
 
 pygame.init()
-monitor = pygame.display.Info()
-font_dat = {'A':[3],'B':[3],'C':[3],'D':[3],'E':[3],'F':[3],'G':[3],'H':[3],'I':[3],'J':[3],'K':[3],'L':[3],'M':[5],'N':[3],'O':[3],'P':[3],'Q':[3],'R':[3],'S':[3],'T':[3],'U':[3],'V':[3],'W':[5],'X':[3],'Y':[3],'Z':[3],
-          'a':[3],'b':[3],'c':[3],'d':[3],'e':[3],'f':[3],'g':[3],'h':[3],'i':[1],'j':[2],'k':[3],'l':[3],'m':[5],'n':[3],'o':[3],'p':[3],'q':[3],'r':[2],'s':[3],'t':[3],'u':[3],'v':[3],'w':[5],'x':[3],'y':[3],'z':[3],
-          '.':[1],'-':[3],',':[2],':':[1],'+':[3],'\'':[1],'!':[1],'?':[3],
-          '0':[3],'1':[3],'2':[3],'3':[3],'4':[3],'5':[3],'6':[3],'7':[3],'8':[3],'9':[3],
-          '(':[2],')':[2],'/':[3],'_':[5],'=':[3],'\\':[3],'[':[2],']':[2],'*':[3],'"':[3],'<':[3],'>':[3],';':[1]}
+sim_start_date = "2020-03-01"     # simulating a solar system starting from this date
+m_earth = 5.9722e24 / 1.98847e30  # Mass of Earth relative to mass of the sun
+m_moon = 7.3477e22 / 1.98847e30
 
-winsize = (1000, 600)
-window = pygame.display.set_mode(winsize, pygame.RESIZABLE)
-surface = pygame.Surface(winsize)
-pygame.display.set_caption("simulazione")
+winsize = (800, 600)
+offset = (winsize[0] / 2, winsize[1] / 2)
+window = pygame.display.set_mode(winsize)
+
+dt = 0.1
 
 
-data = None
+class Object:  # define the objects: the Sun, Earth, Mercury, etc
+    def __init__(self, name, rad, color, r, v):
+        self.name = name
+        self.r = np.array(r, dtype=np.float)
+        self.v = np.array(v, dtype=np.float)
+        self.xs = []
+        self.ys = []
+        self.color = color
+        self.size = rad
 
-with open("data.json", "r") as write_file:
-     data = json.load(write_file)
 
-clock = pygame.time.Clock()
-FPS = 60
-linear_algebra.normalization = 1000000
-earth_img = pygame.image.load("earth.png")
-iss_img = pygame.image.load("iss.png")
+class SolarSystem:
+    def __init__(self, thesun):
+        self.thesun = thesun
+        self.planets = []
+        self.time = None
 
-sole = linear_algebra.Obj(linear_algebra.Vector(data["sole"]["orbita"] + winsize[0] * linear_algebra.normalization / 2, (winsize[1] / 2)  * linear_algebra.normalization, 0), linear_algebra.Vector(0, 0, 0), data["sole"]["massa"], 700)
-sat = linear_algebra.Obj(linear_algebra.Vector(data["mercurio"]["orbita"] + winsize[0] * linear_algebra.normalization / 2, (winsize[1] / 2)  * linear_algebra.normalization, 0), linear_algebra.Vector(0, data["mercurio"]["velocita"], 0), data["mercurio"]["massa"], 700)
+    def add_planet(self, planet):
+        self.planets.append(planet)
 
+    def evolve(self):
+        self.time += dt
+        pygame.draw.circle(window, self.thesun.color, (self.thesun.r[0] + offset[0], self.thesun.r[1] + offset[1]),
+                           self.thesun.size * sizescale)
+        for p in self.planets:
+            p.r += p.v * dt
+            acc = -2.959e-4 * p.r / np.sum(p.r ** 2) ** (3. / 2)  # in units of AU/day^2
+            p.v += acc * dt
+            p.r *= scaling
+            pygame.draw.circle(window, p.color, (p.r[0] + offset[0], p.r[1] + offset[1]), p.size * sizescale)
+            pygame.draw.circle(window, p.color, offset, math.sqrt(pow(p.r[0], 2) + pow(p.r[1], 2)), 4)
+            p.r /= scaling
+
+class Razzo:
+    def __init__(self, r, v):
+        self.r = np.array(r, dtype=np.float)
+        self.v = np.array(v, dtype=np.float)
+        self.color = (255, 255, 255)
+        self.size = 10
+
+    def update(self):
+        self.r += self.v * dt
+        acc = -2.959e-4 * self.r / np.sum(self.r ** 2) ** (3. / 2)  # in units of AU/day^2
+        self.v += acc * dt
+        self.r *= scaling
+        pygame.draw.circle(window, self.color, (self.r[0] + offset[0], self.r[1] + offset[1]), self.size * sizescale)
+        self.r /= scaling
+
+
+ss = SolarSystem(Object("Sun", 28, 'red', [0, 0, 0], [0, 0, 0]))
+ss.time = Time(sim_start_date).jd
+colors = ['gray', 'orange', 'blue', 'chocolate']
+#colors = ['gray', 'orange', 'blue', 'chocolate', 'orange', 'yellow']
+#sizes = [0.38, 0.95, 1., 0.53, 3, 2]
+sizes = [0.38, 0.95, 1., 0.53]
+for i, nasaid in enumerate([1, 2, 3, 4]):
+#for i, nasaid in enumerate([1, 2, 3, 4, 5, 6]):  # The 1st, 2nd, 3rd, 4th planet in solar system
+    obj = Horizons(id=nasaid, location="@sun", epochs=ss.time, id_type='id').vectors()
+    ss.add_planet(Object(nasaid, 20 * sizes[i], colors[i],
+                         [np.double(obj[xi]) for xi in ['x', 'y', 'z']],    #pos
+                         [np.double(obj[vxi]) for vxi in ['vx', 'vy', 'vz']]))  #vel
+
+obj = Horizons(id=3, location="@sun", epochs=ss.time, id_type='id').vectors()
+vel = 32700 * 5.7755e-7 #m/s in AU/giorno
+rocket = Razzo([np.double(obj[xi]) for xi in ['x', 'y', 'z']], [vel * obj['y'] / math.sqrt(pow(obj['x'], 2) + pow(obj['y'], 2)), vel * obj['x'] / math.sqrt(pow(obj['x'], 2) + pow(obj['y'], 2)), 0]) #lo faccio partire dalla terra e gli dò una velocità
+print(rocket.v)
+print(obj['vx'], obj['vy'])
 while True:
-    clock.tick(FPS)
-    surface.fill((0, 0, 0))
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
+    sizescale = (scaling - 15) * 0.008
 
-    sat.update(sole)
-    sole.update(sat)
-    sole.draw(surface, earth_img)
-    sat.draw(surface, iss_img)
-    window.blit(pygame.transform.scale(surface, winsize), [0,0])
+    if sizescale > 1:
+        sizescale = 1
+    for e in pygame.event.get():
+        if e.type == pygame.QUIT:
+            quit()
+        if e.type == pygame.MOUSEBUTTONDOWN or e.type == pygame.MOUSEBUTTONUP:
+            if e.button == 4 and scaling >= 10:
+                scaling -= 1
+            if e.button == 5 and scaling <= 200:
+                scaling += 1
+
+    window.fill((0, 0, 0))
+    ss.evolve()
+    rocket.update()
     pygame.display.update()
