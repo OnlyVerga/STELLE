@@ -7,7 +7,7 @@ import math
 scaling = 100
 
 pygame.init()
-sim_start_date = "2020-03-01"     # simulating a solar system starting from this date
+sim_start_date = "2022-8-25"     # simulating a solar system starting from this date
 m_earth = 5.9722e24 / 1.98847e30  # Mass of Earth relative to mass of the sun
 m_moon = 7.3477e22 / 1.98847e30
 
@@ -21,8 +21,8 @@ dt = 0.1
 class Object:  # define the objects: the Sun, Earth, Mercury, etc
     def __init__(self, name, rad, color, r, v):
         self.name = name
-        self.r = np.array(r, dtype=np.float)
-        self.v = np.array(v, dtype=np.float)
+        self.r = np.array(r, dtype=float)
+        self.v = np.array(v, dtype=float)
         self.xs = []
         self.ys = []
         self.color = color
@@ -48,13 +48,12 @@ class SolarSystem:
             p.v += acc * dt
             p.r *= scaling
             pygame.draw.circle(window, p.color, (p.r[0] + offset[0], p.r[1] + offset[1]), p.size * sizescale)
-            pygame.draw.circle(window, p.color, offset, math.sqrt(pow(p.r[0], 2) + pow(p.r[1], 2)), 4)
             p.r /= scaling
 
 class Razzo:
     def __init__(self, r, v):
-        self.r = np.array(r, dtype=np.float)
-        self.v = np.array(v, dtype=np.float)
+        self.r = np.array(r, dtype=float)
+        self.v = np.array(v, dtype=float)
         self.color = (255, 255, 255)
         self.size = 10
 
@@ -69,24 +68,20 @@ class Razzo:
 
 ss = SolarSystem(Object("Sun", 28, 'red', [0, 0, 0], [0, 0, 0]))
 ss.time = Time(sim_start_date).jd
-colors = ['gray', 'orange', 'blue', 'chocolate']
-#colors = ['gray', 'orange', 'blue', 'chocolate', 'orange', 'yellow']
-#sizes = [0.38, 0.95, 1., 0.53, 3, 2]
-sizes = [0.38, 0.95, 1., 0.53]
-for i, nasaid in enumerate([1, 2, 3, 4]):
-#for i, nasaid in enumerate([1, 2, 3, 4, 5, 6]):  # The 1st, 2nd, 3rd, 4th planet in solar system
+colors = ['gray', 'orange', 'blue', 'chocolate', 'orange', 'yellow']
+sizes = [0.38, 0.95, 1., 0.53, 3, 2]
+for i, nasaid in enumerate([1, 2, 3, 4, 5, 6]):  # The 1st, 2nd, 3rd, 4th planet in solar system
     obj = Horizons(id=nasaid, location="@sun", epochs=ss.time, id_type='id').vectors()
     ss.add_planet(Object(nasaid, 20 * sizes[i], colors[i],
                          [np.double(obj[xi]) for xi in ['x', 'y', 'z']],    #pos
                          [np.double(obj[vxi]) for vxi in ['vx', 'vy', 'vz']]))  #vel
 
 obj = Horizons(id=3, location="@sun", epochs=ss.time, id_type='id').vectors()
-vel = 32700 * 5.7755e-7 #m/s in AU/giorno
+v = 29780
+vel = v * 5.7755e-7 #m/s in AU/giorno
 velocity = [-vel * (obj['y'] / math.sqrt(pow(obj['x'], 2) + pow(obj['y'], 2))), vel * (obj['x'] / math.sqrt(pow(obj['x'], 2) + pow(obj['y'], 2))), 0]
 rocket = Razzo([np.double(obj[xi]) for xi in ['x', 'y', 'z']], velocity) #lo faccio partire dalla terra e gli dò una velocità
-print(rocket.v)
-print(obj['vx'], obj['vy'])
-print(obj['x'], obj['y'])
+
 while True:
     sizescale = (scaling - 15) * 0.008
 
@@ -95,6 +90,14 @@ while True:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             quit()
+
+        if e.type == pygame.KEYDOWN:
+            if e.key == pygame.K_SPACE:
+                v = 32700
+                vel = v * 5.7755e-7 #m/s in AU/giorno
+                velocity = [-vel * (rocket.r[1] / math.sqrt(pow(rocket.r[0], 2) + pow(rocket.r[1], 2))),
+                            vel * (rocket.r[0] / math.sqrt(pow(rocket.r[0], 2) + pow(rocket.r[1], 2))), 0]
+                rocket.v = np.array(velocity, dtype=float)
         if e.type == pygame.MOUSEBUTTONDOWN or e.type == pygame.MOUSEBUTTONUP:
             if e.button == 4 and scaling >= 10:
                 scaling -= 1
