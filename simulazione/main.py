@@ -82,9 +82,11 @@ for i, nasaid in enumerate([1, 2, 3, 4]):
 
 obj = Horizons(id=3, location="@sun", epochs=ss.time, id_type='id').vectors()
 vel = 32700 * 5.7755e-7 #m/s in AU/giorno
-rocket = Razzo([np.double(obj[xi]) for xi in ['x', 'y', 'z']], [vel * obj['y'] / math.sqrt(pow(obj['x'], 2) + pow(obj['y'], 2)), vel * obj['x'] / math.sqrt(pow(obj['x'], 2) + pow(obj['y'], 2)), 0]) #lo faccio partire dalla terra e gli dò una velocità
+velocity = [-vel * (obj['y'] / math.sqrt(pow(obj['x'], 2) + pow(obj['y'], 2))), vel * (obj['x'] / math.sqrt(pow(obj['x'], 2) + pow(obj['y'], 2))), 0]
+rocket = Razzo([np.double(obj[xi]) for xi in ['x', 'y', 'z']], velocity) #lo faccio partire dalla terra e gli dò una velocità
 print(rocket.v)
 print(obj['vx'], obj['vy'])
+print(obj['x'], obj['y'])
 while True:
     sizescale = (scaling - 15) * 0.008
 
