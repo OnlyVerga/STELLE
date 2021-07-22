@@ -1,5 +1,6 @@
 from copy import deepcopy
 import pygame
+import numpy as np
 
 white = (255, 255, 255)
 black = (0, 0, 0)
@@ -10,6 +11,17 @@ light_blue = (0, 255, 255)
 yellow = (255, 255, 0)
 purple = (255, 0, 255)
 grey = (127, 127, 127)
+
+dt = 0.1
+global sizescale
+global scaling
+sizescale = 1
+scaling = 1
+
+def setscale(size, scale):
+    global sizescale, scaling
+    sizescale = size
+    scaling = scale
 
 font_dat = {'A': [3], 'B': [3], 'C': [3], 'D': [3], 'E': [3], 'F': [3], 'G': [3], 'H': [3], 'I': [3], 'J': [3],
             'K': [3], 'L': [3], 'M': [5], 'N': [3], 'O': [3], 'P': [3], 'Q': [3], 'R': [3], 'S': [3], 'T': [3],
@@ -27,6 +39,54 @@ pygame.init()
 Monitor = pygame.display.Info()
 
 
+class Object:  # define the objects: the Sun, Earth, Mercury, etc
+    def __init__(self, name, rad, color, r, v):
+        self.name = name
+        self.r = np.array(r, dtype=float)
+        self.v = np.array(v, dtype=float)
+        self.xs = []
+        self.ys = []
+        self.color = color
+        self.size = rad
+
+
+class SolarSystem:
+    def __init__(self, thesun, offset):
+        self.thesun = thesun
+        self.planets = []
+        self.time = None
+        self.offset = offset
+
+    def add_planet(self, planet):
+        self.planets.append(planet)
+
+    def evolve(self, window):
+        self.time += dt
+        pygame.draw.circle(window, self.thesun.color, (self.thesun.r[0] + self.offset[0], self.thesun.r[1] + self.offset[1]),
+                           self.thesun.size * sizescale)
+        for p in self.planets:
+            p.r += p.v * dt
+            acc = -2.959e-4 * p.r / np.sum(p.r ** 2) ** (3. / 2)  # in units of AU/day^2
+            p.v += acc * dt
+            p.r *= scaling
+            pygame.draw.circle(window, p.color, (p.r[0] + self.offset[0], p.r[1] + self.offset[1]), p.size * sizescale)
+            p.r /= scaling
+
+class Razzo:
+    def __init__(self, r, v, offset):
+        self.r = np.array(r, dtype=float)
+        self.v = np.array(v, dtype=float)
+        self.color = (255, 255, 255)
+        self.size = 10
+        self.offset = offset
+
+    def update(self, window):
+        self.r += self.v * dt
+        acc = -2.959e-4 * self.r / np.sum(self.r ** 2) ** (3. / 2)  # in units of AU/day^2
+        self.v += acc * dt
+        self.r *= scaling
+        pygame.draw.circle(window, self.color, (self.r[0] + self.offset[0], self.r[1] + self.offset[1]), self.size * sizescale)
+        self.r /= scaling
 
 def show_text(Text, X, Y, wl, Font, surface, scaling=1, overflow='normal', Spacing=1, box=False):
     if box != False:
@@ -116,13 +176,14 @@ def generate_font(FontImage, FontSpacingMain, TileSize, TileSizeY, color):
                  'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '.', '-', ',', ':', '+', '\'', '!', '?',
                  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '(', ')', '/', '_', '=', '\\', '[', ']', '*', '"',
                  '<', '>', ';']
+
     FontImage = pygame.image.load(FontImage).convert()
     NewSurf = pygame.Surface((FontImage.get_width(), FontImage.get_height())).convert()
     NewSurf.fill(color)
-    FontImage.set_colorkey((0, 0, 0))
+    FontImage.set_colorkey(black)
     NewSurf.blit(FontImage, (0, 0))
     FontImage = NewSurf.copy()
-    FontImage.set_colorkey((255, 255, 255))
+    FontImage.set_colorkey(white)
     num = 0
     for char in FontOrder:
         FontImage.set_clip(pygame.Rect(((TileSize + 1) * num), 0, TileSize, TileSizeY))
