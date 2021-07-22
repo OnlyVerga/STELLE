@@ -40,14 +40,15 @@ Monitor = pygame.display.Info()
 
 
 class Object:  # define the objects: the Sun, Earth, Mercury, etc
-    def __init__(self, name, rad, color, r, v):
+    def __init__(self, name, rad, r, v, path):
         self.name = name
         self.r = np.array(r, dtype=float)
         self.v = np.array(v, dtype=float)
         self.xs = []
         self.ys = []
-        self.color = color
-        self.size = rad
+        self.size = 2 * rad
+        self.path = path
+        self.img = pygame.image.load(self.path)
 
 
 class SolarSystem:
@@ -62,14 +63,18 @@ class SolarSystem:
 
     def evolve(self, window):
         self.time += dt
-        pygame.draw.circle(window, self.thesun.color, (self.thesun.r[0] + self.offset[0], self.thesun.r[1] + self.offset[1]),
-                           self.thesun.size * sizescale)
+
+        window.blit(pygame.transform.scale(self.thesun.img, (int(self.thesun.size * sizescale), int(self.thesun.size * sizescale))), (self.thesun.r[0] + self.offset[0] - (self.thesun.size * sizescale) / 2, self.thesun.r[1] + self.offset[1] - (self.thesun.size * sizescale) / 2))
+
         for p in self.planets:
             p.r += p.v * dt
             acc = -2.959e-4 * p.r / np.sum(p.r ** 2) ** (3. / 2)  # in units of AU/day^2
             p.v += acc * dt
             p.r *= scaling
-            pygame.draw.circle(window, p.color, (p.r[0] + self.offset[0], p.r[1] + self.offset[1]), p.size * sizescale)
+
+
+            window.blit(pygame.transform.scale(p.img, (int(p.size * sizescale), int(p.size * sizescale))), (p.r[0] + self.offset[0] - (p.size * sizescale)/2, p.r[1] + self.offset[1] - (p.size * sizescale)/2))
+
             p.r /= scaling
 
 class Razzo:

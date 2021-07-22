@@ -18,15 +18,17 @@ clock = pygame.time.Clock()
 
 partito = False
 
-ss = e.SolarSystem(e.Object("Sun", 28, 'red', [0, 0, 0], [0, 0, 0]), offset)
+ss = e.SolarSystem(e.Object("Sun", 28, [0, 0, 0], [0, 0, 0], "./graphics/sole.png"), offset)
 ss.time = Time(sim_start_date).jd
-colors = ['gray', 'orange', 'blue', 'chocolate', 'orange', 'yellow']
+#colors = ['gray', 'orange', 'blue', 'chocolate', 'orange', 'yellow']
 sizes = [0.38, 0.95, 1., 0.53, 3, 2]
+paths = ["./graphics/mercurio.png", "./graphics/venere.png", "./graphics/terra.png",
+         "./graphics/marte.png", "./graphics/giove.png", "./graphics/saturno.png"]
 for i, nasaid in enumerate([1, 2, 3, 4, 5, 6]):  # The 1st, 2nd, 3rd, 4th planet in solar system
     obj = Horizons(id=nasaid, location="@sun", epochs=ss.time, id_type='id').vectors()
-    ss.add_planet(e.Object(nasaid, 20 * sizes[i], colors[i],
+    ss.add_planet(e.Object(nasaid, 20 * sizes[i],
                          [np.double(obj[xi]) for xi in ['x', 'y', 'z']],    #pos
-                         [np.double(obj[vxi]) for vxi in ['vx', 'vy', 'vz']]))  #vel
+                         [np.double(obj[vxi]) for vxi in ['vx', 'vy', 'vz']], paths[i]))  #vel
 
 obj = Horizons(id=3, location="@sun", epochs=ss.time, id_type='id').vectors()
 v = 29780
@@ -57,7 +59,7 @@ while True:
                 rocket.v = np.array(velocity, dtype=float)
                 partito = True
         if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 4 and scaling >= 10:
+            if event.button == 4 and scaling >= 30:
                 scaling -= 1
             if event.button == 5 and scaling <= 200:
                 scaling += 1
