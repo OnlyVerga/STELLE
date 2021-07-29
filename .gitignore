@@ -1,7 +1,7 @@
 ./simulazione/venv
 ./simulazione/_pycache_
-./DS_Store
-./materiale \progetto/DS_Store
-./ricerca/DS_Store
-./simulazione/DS_Store
+./.DS_Store
+./materiale \progetto/.DS_Store
+./ricerca/.DS_Store
+./simulazione/.DS_Store
 .idea/
