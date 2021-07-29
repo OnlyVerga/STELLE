@@ -58,6 +58,7 @@ while True:
                 velocity = [-vel * (rocket.r[1] / math.sqrt(pow(rocket.r[0], 2) + pow(rocket.r[1], 2))),
                             vel * (rocket.r[0] / math.sqrt(pow(rocket.r[0], 2) + pow(rocket.r[1], 2))), 0]
                 partito = True
+                rocket.v = np.array(velocity, dtype=float)
                 consumi = rocket.update_mass(np.array(velocity, dtype=float))
         if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
             if event.button == 4 and scaling >= 30:

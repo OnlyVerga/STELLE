@@ -99,7 +99,7 @@ class Razzo:
 
     def update_mass(self, newvel):
         oldmass = self.mass
-        oldvel = math.sqrt(pow(self.v[0], 2) + pow(self.v[1], 2))
+        orbvel = math.sqrt(pow(self.v[0], 2) + pow(self.v[1], 2))
         newvel = math.sqrt(pow(newvel[0], 2) + pow(newvel[1], 2))
         self.mass = oldmass * math.exp((newvel-orbvel) / (375 * 9.8 * 5.7755e-7))
         return -self.mass + oldmass
