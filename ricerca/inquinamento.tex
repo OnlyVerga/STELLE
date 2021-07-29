@@ -24,8 +24,41 @@ I consumi totali ammontano quindi a 8\,557 tonnellate di carburante.\\ Di questi
 Abbiamo ignorato eventuali correzioni orbitali necessarie durante il viaggio, in quanto essendo lontani dalla Terra non possono causare alcun danno.\\
 Inoltre, in quanto il nostro obiettivo è focalizzarci sull'inquinamento terrestre, abbiamo tralasciato anche i consumi in orbita marziana.
 \subsection{Calcolo dei gas serra prodotti}
-La reazione che accade nel motore raptor è:
+I gas prodotti dal motore non hanno tutti lo stesso impatto a livello ambientale, infatti l'impatto varia se si cambia il gas in esame o l'altitudine alla quale questo è stato rilasciato.\\
+Prendiamo in esame la reazione che avviene in un motore raptor:
 $$
-\ce{CH4} + \ce{O2} \rightarrow \ce{CO2} + \ce{H2O}
+\ce{CH4} + \ce{2O2} \rightarrow \ce{CO2} + \ce{2H2O}
 $$
-e bla bla bla cose da chimici
+Questa, come prodotti di scarico produce $\ce{CO2}$ e $\ce{H2O}$, entrambi gassosi.\\
+Prendiamo in considerazione il booster: questo rilascia in totale 3400 tonnellate di gas di scarico in bassa atmosfera.\\
+Poiché il vapor acqueo e l'anidride carbonica hanno GWP differenti, è utile calcolare le masse di prodotti espulsi nell'atmosfera.\\
+Per farlo bisogna partire dalle moli di reagenti presenti nella reazione:
+$$
+m_{\ce{CH4}} + m_{\ce{O2}} = 3,4 \cdot 10^9\,g
+$$
+$$
+n_{\ce{CH4}} \cdot mm_{\ce{CH4}} + n_{\ce{O2}} \cdot mm_{\ce{O2}} = 3,4 \cdot 10^9\,g
+$$
+dai coefficienti stechiometrici è possibile notare che il numero di moli dell'ossigeno è il doppio rispetto a quelle del metano. Possiamo quindi scrivere:
+$$
+n_{\ce{CH4}} \cdot mm_{\ce{CH4}} + 2n_{\ce{CH4}} \cdot mm_{\ce{O2}} = 3,4 \cdot 10^9\,g
+$$
+Ma poiché le moli di $\ce{CH4}$ equivalgono a quelle di $\ce{CO2}$ possiamo arrivare a calcolare quanta $\ce{CO2}$ viene emessa:
+$$
+n_{\ce{CO2}} = \frac{3,4 \cdot 10^9\,g}{16,0\,\frac{g}{mol} + 32,0\,\frac{g}{mol}}
+$$
+$$
+m_{\ce{CO2}} = \frac{3,4 \cdot 10^9\,g}{16,0\,\frac{g}{mol} + 32,0\,\frac{g}{mol} } \cdot 44,0\,\frac{g}{mol} = 1,87 \cdot 10^6\,kg
+$$
+Di conseguenza la massa di vapor acqueo espulsa è di $1,53 \cdot 10^6\,kg$.
+Questi gas vengono rilasciati prevalentemente nella bassa atmosfera, di conseguenza possono entrare a far parte del ciclo dell'acqua o nella fotosintesi e non sono così dannosi come le emissioni in alta atmosfera.\\
+Le emissioni date dalla Starship in sè, al contrario, vengono emesse in alta atmosfera e i gas espulsi rimangono stazionari, causando un impatto maggiore al riscaldamento globale.\\
+Il processo per calcolarne le masse è uguale a quello precedente. Le masse di prodotti risultano essere di $6,12 \cdot 10^5\,kg$ di $\ce{CO2}$ e $5,01 \cdot 10^5\,kg$ di $\ce{H2O}$.\\
+Prendiamo in esame l' $\ce{H2O}$: a bassa quota è un gas praticamente innocuo in quanto entra a far parte del ciclo dell'acqua e viene assorbito dai normali cicli del pianeta.\\
+Ad alta quota, invece, si trasforma nel gas serra più pericoloso in quanto non partecipa ai moti convettivi dell'atmosfera e non partecipa al ciclo dell'acqua.\\
+Nonostante ciò non viene spesso citato tra i gas serra in quanto è naturalmente presente in grandi quantità nell'atmosfera e costituisce la principale fonte di effetto serra naturale.\\
+Bisogna comunque monitorare i livelli di $\ce{H2O}$ nell'atmosfera poiché un aumento rapido e continuo di un qualsiasi gas può portare a danni per l'ambiente.\\
+Il vero problema che affligge il vapor acqueo non è il suo GWP, che risulta essere molto basso, bensì le quantità in cui viene emesso: ogni attività umana produce in qualche modo del vapor acqueo, dalle fabbriche, all'agricoltura, all'acqua corrente, o addirittura la produzione di elettricità. Di conseguenza si immettono ingenti quantità di vapor acqueo nell'atmosfera che, se non controllate, potrebbero causare danni nel futuro.\\
+Per quanto riguarda la $\ce{CO2}$ i danni ambientali sono un po'più grossi: fin dalla rivoluzione industriale i livelli di $\ce{CO2}$ nell'atmosfera sono sempre aumentati. Inoltre, l'anidride carbonica possiede un GWP molto maggiore di quello del vapor acqueo, di conseguenza basta una emissione più piccola per ottenere lo stesso effetto di surriscaldamento.\\
+Proprio per questo le emissioni di anidride carbonica sono un problema del momento, e se in quanto specie dominante sul pianeta non facciamo niente per ridurle potrebbero portare ad un aumento rapido della temperatura media del pianeta, portando così ai problemi che tutti conosciamo: innalzamento dei mari dovuto allo scioglimento dei ghiacci, clima imprevedibile e diverso da come è storicamente solito essere in quel luogo, estinzione di moltissime specie animali e vegetali ecc..\\
+

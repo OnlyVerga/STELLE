@@ -13,7 +13,7 @@ Il primo passo consiste nel fuggire dalla SOI della Terra. Si può raggiungere q
 Una volta finiti tutti i controlli nell'orbita di parcheggio LEO la Starship è pronta a riaccendere i motori e inserirsi in orbita iperbolica.
 Per farlo dovrà raggiungere una velocità $v_i$ tale da arrivare fuori dalla SOI terrestre con una velocità che chiameremo $v_\infty$.\\
 Senza fare troppe approssimazioni è possibile considerare il sistema Terra-Starship come un sistema chiuso (ignorando di conseguenza le influenze gravitazionali del Sole e gli altri pianeti). Di conseguenza l'energia meccanica totale viene conservata.\\
-Possiamo inoltre assumere che all'uscita della SOI l'energia potenziale gravitazionale sia 0, in quanto questa assumerà valori trascurabili rispetto all'energia cinetica dell'astronave. In simboli:
+Possiamo inoltre assumere che all'uscita della SOI l'energia potenziale gravitazionale dell'astronave sia 0 in quanto questa assumerà valori trascurabili rispetto alla sua energia cinetica. In simboli:
 $$K_0 + U_0 = K$$
 \begin{equation}
     \label{Velocità Terra}
@@ -52,7 +52,8 @@ dove $v_i$ rappresenta la velocità al vertice dell'orbita iperbolica, che poi v
 Anche in questo caso conviene esprimere $v_\alpha$ come la somma tra $v_m$ e $v_\infty$, trascurando le dimensioni della SOI di Marte in confronto allo spazio interplanetario.
 Una volta calcolato $v_i$ bisogna effettuare un'ultima manovra per inserirsi in orbita marziana. L'obiettivo di tale manovra è quello di far diminuire la velocità orbitale da $v_i$ a $v_o$ portando la Starship in un'orbita circolare.
 \subsection{Calcolo delle velocità e dei consumi}
-Per ottenere l'orbita che la Starship deve seguire per arrivare su Marte bisogna usare l'equazione \ref{Conservazione MA} a sistema con la conservazione dell'energia nei due punti di afelio e di perielio:
+L'orbita che la Starship descriverà nel suo viaggio viene descritta da due equazioni: la prima, esposta precedentemente, rappresenta la conservazione del momento angolare (equazione \ref{Conservazione MA}), mentre la seconda rappresenta la conservazione dell'energia meccanica in due punti dell'orbita.\\
+Per comodità utilizziamo i due punti di afelio e perielio:
 \begin{equation}
     \begin{cases}
         v_\pi \cdot R_t = v_\alpha \cdot R_m\\
@@ -64,7 +65,7 @@ Risolvendo il sistema e scartando i risultati negativi si ottiene un unico valor
 $$
 v_\infty = v_\pi - v_t = 32\,700\, \frac{m}{s} - 29\,780\, \frac{m}{s} = 2\,940\,\frac{m}{s}
 $$
-Applicando l'equazione \ref{Velocità Terra} calcolo la velocità che l'astronave deve raggiungere per lasciare la LEO e ottenere l'orbita iperbolica.
+Applicando l'equazione \ref{Velocità Terra} è possibile calcolare la velocità che l'astronave deve raggiungere per lasciare la LEO e ottenere l'orbita iperbolica.
 $$
 \frac{1}{2}v_i^2 - \frac{\mu_t}{r} = \frac{1}{2}\left(2\,940\,\frac{m}{s}\right)^2
 $$

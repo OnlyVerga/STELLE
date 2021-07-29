@@ -9,9 +9,9 @@ scaling = 100
 
 pygame.init()
 sim_start_date = "2022-8-25"     # simulating a solar system starting from this date
-
-winsize = (800, 600)
-offset = (winsize[0] / 2, winsize[1] / 2)
+consumi = 0
+winsize = (1000, 600)
+offset = ((winsize[0] - 200) / 2 + 200, winsize[1] / 2)
 window = pygame.display.set_mode(winsize)
 clock = pygame.time.Clock()
 
@@ -40,6 +40,7 @@ text_color = e.white
 font = e.generate_font('fonts/small_font.png', e.font_dat, 5, 8, text_color)
 
 
+
 while True:
 
     sizescale = (scaling - 15) * 0.008
@@ -56,8 +57,8 @@ while True:
                 vel = v * 5.7755e-7 #m/s in AU/giorno
                 velocity = [-vel * (rocket.r[1] / math.sqrt(pow(rocket.r[0], 2) + pow(rocket.r[1], 2))),
                             vel * (rocket.r[0] / math.sqrt(pow(rocket.r[0], 2) + pow(rocket.r[1], 2))), 0]
-                rocket.v = np.array(velocity, dtype=float)
                 partito = True
+                consumi = rocket.update_mass(np.array(velocity, dtype=float))
         if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
             if event.button == 4 and scaling >= 30:
                 scaling -= 1
@@ -65,7 +66,24 @@ while True:
                 scaling += 1
 
     window.fill(e.black)
-    e.show_text("pe du'fischi", 0, 0, window.get_width(), font, window,
+    pygame.draw.rect(window, e.white, pygame.Rect(0, 0, 200, 600))
+    e.show_text("Dati utili:", 0, 0, window.get_width(), font, window,
+                scaling=3)
+    e.show_text("Distanza Sole:", 0, 30, window.get_width(), font, window,
+                scaling=3)
+    e.show_text(str(round(math.sqrt(pow(rocket.r[0], 2) + pow(rocket.r[1], 2)), 1)) + " AU", 0, 60, window.get_width(), font, window,
+                scaling=3)
+    e.show_text("Massa:", 0, 90, window.get_width(), font, window,
+                scaling=3)
+    e.show_text(str(round(rocket.mass,1)), 0, 120, window.get_width(), font, window,
+                scaling=3)
+    e.show_text("velocita':", 0, 150, window.get_width(), font, window,
+                scaling=3)
+    e.show_text(str(round(math.sqrt(pow(rocket.v[0], 2) + pow(rocket.v[1], 2)) / 5.7755e-4, 3)) + " km/s", 0, 180, window.get_width(), font, window,
+                scaling=3)
+    e.show_text("totale consumi:", 0, 210, window.get_width(), font, window,
+                scaling=3)
+    e.show_text(str(round(consumi,1)) + " tons", 0, 240, window.get_width(), font, window,
                 scaling=3)
     e.setscale(sizescale, scaling)
     ss.evolve(window)

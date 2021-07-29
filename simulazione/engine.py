@@ -1,6 +1,7 @@
 from copy import deepcopy
 import pygame
 import numpy as np
+import math
 
 white = (255, 255, 255)
 black = (0, 0, 0)
@@ -11,6 +12,8 @@ light_blue = (0, 255, 255)
 yellow = (255, 255, 0)
 purple = (255, 0, 255)
 grey = (127, 127, 127)
+
+massa_terra = 5.97e24
 
 dt = 0.1
 global sizescale
@@ -83,6 +86,7 @@ class Razzo:
         self.v = np.array(v, dtype=float)
         self.color = (255, 255, 255)
         self.size = 10
+        self.mass = 1320
         self.offset = offset
 
     def update(self, window):
@@ -92,6 +96,13 @@ class Razzo:
         self.r *= scaling
         pygame.draw.circle(window, self.color, (self.r[0] + self.offset[0], self.r[1] + self.offset[1]), self.size * sizescale)
         self.r /= scaling
+
+    def update_mass(self, newvel):
+        oldmass = self.mass
+        oldvel = math.sqrt(pow(self.v[0], 2) + pow(self.v[1], 2))
+        newvel = math.sqrt(pow(newvel[0], 2) + pow(newvel[1], 2))
+        self.mass = oldmass * math.exp((newvel-orbvel) / (375 * 9.8 * 5.7755e-7))
+        return -self.mass + oldmass
 
 def show_text(Text, X, Y, wl, Font, surface, scaling=1, overflow='normal', Spacing=1, box=False):
     if box != False:
@@ -185,10 +196,10 @@ def generate_font(FontImage, FontSpacingMain, TileSize, TileSizeY, color):
     FontImage = pygame.image.load(FontImage).convert()
     NewSurf = pygame.Surface((FontImage.get_width(), FontImage.get_height())).convert()
     NewSurf.fill(color)
-    FontImage.set_colorkey(black)
+    FontImage.set_colorkey(white)
     NewSurf.blit(FontImage, (0, 0))
     FontImage = NewSurf.copy()
-    FontImage.set_colorkey(white)
+    FontImage.set_colorkey(black)
     num = 0
     for char in FontOrder:
         FontImage.set_clip(pygame.Rect(((TileSize + 1) * num), 0, TileSize, TileSizeY))

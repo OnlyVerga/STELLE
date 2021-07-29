@@ -60,12 +60,12 @@ Come vedremo questi consumi saranno comunque irrisori rispetto all'inquinamento 
 \label{Definizione orbite}
 Come programmato, il primo passo da fare è quello di inserirsi in un'orbita LEO temporanea. Poiché SpaceX non ha ancora pubblicato i suoi piani di volo per Starship non sappiamo con certezza le dimensioni di quest'orbita, di conseguenza siamo costretti ad assumerle. Per semplicità supponiamo che voglia posizionarsi a 400km di altezza, circa come la ISS. Comunque poco cambia tra un'orbita o un'altra in quanto la forza di gravità da contrastare è conservativa, ciò significa che non importa il tragitto che il corpo compie, ma il lavoro che questo dovrà compiere per superare la forza di gravità dipende solo dal punto di partenza e il punto di arrivo (se si assume  un'orbita più bassa poi risulterà più difficoltoso assumere un'orbita iperbolica, mentre se si assume un'orbita più alta sarà più difficile raggiungerla, ma dopo sarà facile fuggire dalla SOI terrestre).\\
 Il problema principale del lancio è calcolare quel parametro $\overline{g \cdot sin(\theta)}$, impossibile senza fare delle approssimazioni. Una approssimazione da fare consiste nell'ipotizzare che l'angolo $\theta$ cambi in maniera lineare, anche se nella realtà non è proprio così. Questo ci permette di sostituire $\theta$, che varia da 0 a$\frac{\pi}{2}$ radianti, con il suo valor medio $\overline{\theta}$, che vale $\frac{\pi}{4}$ radianti. \\
-Per l'accelerazione di gravità, invece, si procede in un modo un po'più difficile. Il valor medio risulta uguale all'integrale definito dell'espressione di g in funzione di r diviso l'intervallo preso in considerazione. In simboli:
+Per l'accelerazione di gravità, invece, si procede in un modo un po' più difficile. Il valor medio risulta uguale all'integrale definito dell'espressione di g in funzione di r diviso l'intervallo preso in considerazione. In simboli:
 $$
 \overline{g} = \frac{1}{h}\int_{r_t}^{r_t+h}{\frac{Gm_t}{r^2}dr}
 $$
 Dove con $h$ ci si riferisce alla quota dell'orbita. Tale integrale è finito e per l'orbita prestabilita (400 km s.l.m.) vale circa $9,2 \, \frac{m}{s^2}$.\\
-L'equazione \ref{Rocket eq grav} va applicata al primo stadio di un lancio Starship: il Super Heavy. Questo booster pesa ben 5 mila tonnellate da solo, di cui 3,4 mila solo di carburante. In un volo normale il MECO avviene dopo circa 2 minuti di volo (T+2:30). La fase successiva si interrompe con il SECO. In quest'ultima fase avviene il distacco del booster dalla astronave. Il SECO avviene dopo circa 8 minuti di volo (T+8:07) la durata complessiva dell'accensione del secondo stadio dura circa 5 minuti (5:24).
+L'equazione \ref{Rocket eq grav} va applicata al primo stadio di un lancio Starship: il Super Heavy. Questo booster pesa ben 5 mila tonnellate da solo, di cui 3,4 mila solo di carburante. In un volo normale il MECO avviene dopo circa 2 minuti di volo (T+2:30). La fase successiva si interrompe con il SECO. In quest'ultima fase avviene il distacco del booster dalla astronave. Il SECO avviene dopo circa 8 minuti di volo (T+8:07); la durata complessiva dell'accensione del secondo stadio dura circa 5 minuti (5:24).
 \subsection{Calcolo delle velocità e dei consumi}
 Prendiamo in considerazione la prima fase del lancio, dalla partenza al MECO. In questa fase si ha il booster Super Heavy attaccato alla Starship, che serve a portare la nave ad un'orbita intermedia molto bassa prima di eseguire la manovra finale per raggiungere l'orbita di parcheggio.\\
 La massa iniziale della nave con il booster è di 5\,000 tonnellate, quella finale (priva del booster) di circa 1\,320 tonnellate.
@@ -84,7 +84,7 @@ $$
 dove con T indichiamo il periodo di rotazione (1 giorno) e con $lat$ indichiamo la latitudine del posto.
 A Boca Chica, Texas, questa velocità vale circa $417\,\frac{m}{s}$.\\
 Inoltre, questa velocità non è sufficiente a mantenere la Starship in orbita in quanto, all'altezza prestabilita, ha bisogno di una velocità di circa 
-$7\,670\,\frac{m}{s}$ per rimanere in quell'orbita.\\
+$7\,670\,\frac{m}{s}$ per rimanere in orbita.\\
 Tale velocità è ottenibile mediante la relazione
 $$
 v_o = \sqrt{\frac{G \cdot M}{d}}

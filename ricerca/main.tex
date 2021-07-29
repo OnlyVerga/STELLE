@@ -14,21 +14,57 @@
 \usepackage[margin=7em]{geometry}
 
 \addbibresource{bibliografia.bib}
-\pagenumbering{roman}
-\definecolor{title_blue}{RGB}{91, 144, 250}
+\pagenumbering{Roman}
+\usepackage[colorinlistoftodos]{todonotes}
 
-\setlength{\marginparwidth}{2cm}
 \begin{document}
-\title{\huge{\textbf{\textcolor{title_blue}{INQUINAMENTO ATMOSFERICO CAUSATO DALL'INDUSTRIA AEROSPAZIALE}}}}
 
-\author{Lorenzo Vergani \and Andrea Greco \and Anna Fornasari \and Pietro Nardi \and Cecilia Guizzi}
-\date{Agosto 2021}
-\maketitle
+\begin{titlepage}
 
-\vspace{11em}
-\begin{center}
-    Questo lavoro è stato creato per il progetto \href{https://www.protom.com/2021/01/20/new-education-progetti-innovativi-in-collaborazione-con-lesa-agenzia-spaziale-europea/}{STELLE} di \href{https://www.protom.com}{PROTOM} in collaborazione con \href{https://business.esa.int/funding/invitation-to-tender/new-education}{ESA} per il progetto "New Education", al fine introdurre nuove modalità di apprendimento mirate per gli interessi di ogni studente.
-\end{center}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center
+
+\textsc{\LARGE Liceo Scientifico Leonardo}\\[1.5cm] 
+\textsc{\Large Lavoro realizzato per il progetto \href{https://www.protom.com/2021/01/20/new-education-progetti-innovativi-in-collaborazione-con-lesa-agenzia-spaziale-europea/}{STELLE}}\\[0.5cm]
+\textsc{\large organizzato da \href{https://www.protom.com}{PROTOM} in collaborazione con \href{https://business.esa.int/funding/invitation-to-tender/new-education}{ESA} per il progetto "New Education"}\\[0.5cm]
+
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Inquinamento atmosferico provocato dall'industria aerospaziale}\\[0.4cm]
+\HRule \\[1.5cm]
+
+\Large \emph{Autori:}\\
+Lorenzo \textsc{Vergani}\\
+\vspace{.5em}
+Andrea \textsc{Greco}\\
+\vspace{.5em}
+Anna \textsc{Fornasari}\\
+\vspace{.5em}
+Pietro \textsc{Nardi}\\
+\vspace{.5em}
+Cecilia \textsc{Guizzi}\\
+\vspace{1em}
+\textit{\small con la collaborazione di:}\\
+Alessio \textsc{Langellotti}\\[1cm]
+
+{\large \today}\\[2cm]
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=3cm]{logo.png}
+    \label{logo}
+\end{figure}
+
+\vfill
+
+\end{titlepage}
+
+
+\begin{abstract}
+Abbiamo diviso il lavoro in due sezioni: la prima ha l'obiettivo di calcolare quanti gas inquinanti vengono prodotti durante una ipotetica missione Starship e analizzarne il contributo al riscaldamento globale.\\
+Nella seconda parte compareremo l'inquinamento provocato dall'industria aerospaziale e più in particolare da Starship con altri settori di attività umane, inoltre cercheremo di ipotizzare dei metodi per rendere il viaggio nello spazio ancora più sostenibile.
+\end{abstract}
 
 \newpage
 \tableofcontents
@@ -36,7 +72,7 @@
 \subfile{costanti}
 \newpage
 \section{Introduzione}
-Abbiamo deciso di focalizzarci sul tema dell'esplorazione spaziale in quanto è un settore relativamente nuovo e in continuo cambiamento. Inoltre, avendo a cuore il pianeta, abbiamo deciso di cercare di calcolare la quantità di gas serra prodotti da una ipotetica missione \href{https://www.spacex.com/vehicles/starship/}{Starship} prodotta dall'agenzia \href{https://www.spacex.com/}{SpaceX}.\\
+Abbiamo deciso di focalizzarci sul tema dell'esplorazione spaziale in quanto è un settore relativamente nuovo e in continua evoluzione. \\
 La maggior parte dei dati utilizzati proviene dal gigantesco database di ESA, che ha gentilmente messo a disposizione i suoi dati satellitari sulla composizione dell'atmosfera dagli anni '80 a oggi. Tutte le fonti verranno citate nella bibliografia alla fine del lavoro.\\
 Non è nostra intenzione fornire un valore esaustivo dell'inquinamento prodotto, ma solo una stima tale da far realizzare al lettore quanto il contributo che l'industria aerospaziale dà all'inquinamento atmosferico sia irrisorio rispetto alle quantità di gas serra prodotti da altre attività umane.\\
 Speriamo di divulgare un po' più di consapevolezza nel lettore sul problema dell'inquinamento dell'aria e di quanto questo sia facilmente limitabile con dei piccoli accorgimenti nella vita di tutti i giorni che non richiedono un grande sforzo economico o un grande impiego di tempo.
@@ -52,10 +88,13 @@ Speriamo di divulgare un po' più di consapevolezza nel lettore sul problema del
 \subfile{atterraggio}
 \section{Resoconto dei consumi totali e inquinamento prodotto}
 \subfile{inquinamento}
+\section{Simulazione in Python}
+\subfile{simulazione}
 \newpage
 \part{Contributo del settore aerospaziale}
 \setcounter{section}{0}
-\section{Prova}
+\section{Inquinamento delle automobili}
+\subfile{automobili}
 \section{Prova2}
 \printbibliography
 
